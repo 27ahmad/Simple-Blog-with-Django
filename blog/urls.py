@@ -1,5 +1,5 @@
 from django.urls import path,include
-from .views import post_list, post_create, post_detail
+from .views import post_list, post_create, post_detail, author_posts, delete_post, category_detail
 from .views import register, user_login, post_create, category_create, category_list
 
 
@@ -11,6 +11,9 @@ urlpatterns = [
     path('post/create/', post_create, name='post_create'),
     path('category/create/', category_create, name='category_create'),
     path('categories/', category_list, name='category_list'),
+    path('categories/<int:id>/', category_detail, name='category_detail'),
     path('accounts/', include('django.contrib.auth.urls')),
+     path('author/posts/', author_posts, name='author_posts'),
+     path('author/posts/delete/<int:post_id>/', delete_post, name='post_delete'),
 ]
     

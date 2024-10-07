@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container mt-4">
+    <h2>Categories</h2>
+    <ul class="list-group">
+        {% for category in categories %}
+            <li class="list-group-item">
+                <a href="{% url 'category_detail' category.id %}">
+                    {{ category.name }}
+                </a>
+            </li>
+        {% empty %}
+            <li class="list-group-item">No categories found.</li>
+        {% endfor %}
+    </ul>
+</div>
+{% endblock %}

@@ -1,28 +1,55 @@
 {% extends 'base.html'%}
 {% block content %}
-<div class="container">
+{% load widget_tweaks %}
+{% load static %}
 
-    <h1>{{post.title}}</h1>
-    <p>{{post.content}}</p>
-    <hr>
+<div class="container mt-4">
+    <div class="row">
+        <div class="col-md-8 offset-md-2">
+            <!-- Post Content Section -->
+            <div class="card mb-3">
+                <div class="card-body">
+                    <h2>{{ post.title }}</h2>
+                    <p class="text-muted">Published on {{ post.created_at|date:"F d, Y" }} by {{ post.author }}</p>
+                    <p>{{ post.content|safe}}</p>
+                </div>
+            </div>
 
-    <h4>Comments</h4>
-    {% for comment in comments%}
-    <div class='comment'>
-        <strong>{{comment.name}}</strong>
-        <p> {{comment.body}}</p>
+            <!-- Comments Section -->
+            <div class="card mb-3">
+                <div class="card-body">
+                    <h5>Comments</h5>
+                    {% for comment in comments %}
+                        <div class="comment-box mb-2">
+                            <strong>{{ comment.name }}</strong> <br>
+                            <p>{{ comment.body }}</p>
+                        </div>
+                    {% empty %}
+                        <p>No comments yet.</p>
+                    {% endfor %}
+                </div>
+            </div>
+
+            <!-- Comment Form Section -->
+            <div class="card">
+                <div class="card-body">
+                    <h5>Leave a Comment</h5>
+                    <form method="POST">
+                        {% csrf_token %}
+                        <div class="mb-3">
+                            <label for="name" class="form-label">Your Name</label>
+                            {{ form.name|add_class:"form-control" }}
+                        </div>
+                        <div class="mb-3">
+                            <label for="body" class="form-label">Comment</label>
+                            {{ form.body|add_class:"form-control" }}
+                        </div>
+                        <button type="submit" class="btn btn-secondary w-100">Submit Comment</button>
+                    </form>
+                </div>
+            </div>
+        </div>
     </div>
-
-    {% empty %}
-    <p>No comments yet. Be the first to commnet! </p>
-    {% endfor %}
-
-
-    <h5> Add a Comment: </h5>
-    <form method="POST">
-        {% csrf_token %}
-        {{form.as_p}}
-        <button type="submit" class='btn btn-primary'>Submit</button>
-    </form>
 </div>
-{%endblock%}
+
+{% endblock %}

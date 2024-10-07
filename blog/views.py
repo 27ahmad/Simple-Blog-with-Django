@@ -57,15 +57,15 @@ def user_login(request):
     return render(request, 'registration/login.html', {'form': form})
 
 # Post Creation View
-@login_required
+@login_required  # Ensure the user is logged in to create a post
 def post_create(request):
     if request.method == 'POST':
         form = PostForm(request.POST)
         if form.is_valid():
-            post = form.save(commit=False)
-            post.author = request.user
-            post.save()
-            return redirect('post_list')
+            post = form.save(commit=False)  # Do not save yet
+            post.author = request.user  # Assign the author
+            post.save()  # Now save the post
+            return redirect('post_detail', pk=post.pk)  # Redirect to the post detail view
     else:
         form = PostForm()
     return render(request, 'blog/post_form.html', {'form': form})
@@ -80,9 +80,26 @@ def category_create(request):
             return redirect('category_list')
     return render(request, 'blog/category_form.html')
 
+@login_required
+def author_posts(request):
+    posts = Post.objects.filter(author=request.user)
+    return render(request, 'blog/author_posts.html', {'posts': posts})
+
+@login_required
+def delete_post(request, post_id):
+    post = get_object_or_404(Post, id=post_id, author=request.user)
+    if request.method == 'POST':
+        post.delete()
+        return redirect('author_posts')
+    return render(request, 'blog/post_confirm_delete.html', {'post': post})
+
 def category_list(request):
     categories = Category.objects.all()
     return render(request, 'blog/category_list.html', {'categories': categories})
+
+def category_detail(request, id):
+    category = get_object_or_404(Category, id=id)
+    return render(request, 'blog/category_detail.html', {'category': category})
 
 # Create your views here.
 

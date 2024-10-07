@@ -38,7 +38,28 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'blog',
+    'widget_tweaks',
+    'ckeditor',
 ]
+
+CKEDITOR_CONFIGS = {
+    'default': {
+        'toolbar': 'Custom',
+        'toolbar_Custom': [
+            ['Bold', 'Italic', 'Underline', 'Strike'],
+            ['NumberedList', 'BulletedList', '-', 'Outdent', 'Indent'],
+            ['Link', 'Unlink', 'Image', 'Table'],
+            ['Source', 'PasteFromWord'],
+        ],
+        'height': 300,
+        'width': '100%',
+        'extraPlugins': ','.join(['autogrow']),
+        'autoGrow_onStartup': True,
+        'autoGrow_maxHeight': 600,
+        'autoGrow_minHeight': 300,
+    },
+}
+
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',

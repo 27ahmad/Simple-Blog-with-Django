@@ -1,5 +1,6 @@
 from django import forms 
 from .models import Comment
+from ckeditor.widgets import CKEditorWidget
 from .models import Post
 
 class CommentForm(forms.ModelForm):
@@ -8,9 +9,12 @@ class CommentForm(forms.ModelForm):
         fields = ('name', 'body')
 
 class PostForm(forms.ModelForm):
+    content = forms.CharField(widget=CKEditorWidget())
     class Meta:
         model = Post
-        fields = ['title', 'content', 'author', 'category']
+        fields = ['title', 'content', 'category']
+
+
 
 
 from django.contrib.auth.models import User
