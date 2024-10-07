@@ -1,0 +1,28 @@
+{% extends 'base.html'%}
+{% block content %}
+<div class="container">
+
+    <h1>{{post.title}}</h1>
+    <p>{{post.content}}</p>
+    <hr>
+
+    <h4>Comments</h4>
+    {% for comment in comments%}
+    <div class='comment'>
+        <strong>{{comment.name}}</strong>
+        <p> {{comment.body}}</p>
+    </div>
+
+    {% empty %}
+    <p>No comments yet. Be the first to commnet! </p>
+    {% endfor %}
+
+
+    <h5> Add a Comment: </h5>
+    <form method="POST">
+        {% csrf_token %}
+        {{form.as_p}}
+        <button type="submit" class='btn btn-primary'>Submit</button>
+    </form>
+</div>
+{%endblock%}
