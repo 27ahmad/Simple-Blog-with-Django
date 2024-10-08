@@ -1,3 +1,4 @@
+
 <!-- templates/blog/post_form.html -->
 {% extends 'base.html' %}
 {% block content %}
@@ -8,24 +9,24 @@
         <div class="col-md-8">
             <div class="card">
                 <div class="card-header">
-                    <h3>Create New Post</h3>  <!-- Change header for creating -->
+                    <h3>Edit Post</h3>  <!-- Change header for editing -->
                 </div>
                 <div class="card-body">
-                    <form method="POST" action="{% url 'post_create' %}">  <!-- Action for creating posts -->
+                    <form method="POST" action="{% url 'post_edit' post.id %}">  <!-- Update action to point to the edit URL -->
                         {% csrf_token %}
                         <div class="mb-3">
                             <label for="title" class="form-label">Post Title</label>
-                            {{ form.title|add_class:"form-control" }}  <!-- Field for title -->
+                            {{ form.title|add_class:"form-control" }}
                         </div>
                         <div class="mb-3">
                             <label for="category" class="form-label">Category</label>
-                            {{ form.category|add_class:"form-control" }}  <!-- Field for category -->
+                            {{ form.category|add_class:"form-control" }}
                         </div>
                         <div class="mb-3">
                             <label for="content" class="form-label">Content</label>
-                            {{ form.content|add_class:"form-control" }}  <!-- Field for content -->
+                            {{ form.content|add_class:"form-control" }}
                         </div>
-                        <button type="submit" class="btn btn-primary w-100">Create Post</button>  <!-- Button for creating -->
+                        <button type="submit" class="btn btn-primary w-100">Update Post</button>  <!-- Change button text -->
                     </form>
                 </div>
             </div>

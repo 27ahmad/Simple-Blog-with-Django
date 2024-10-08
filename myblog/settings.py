@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'blog',
     'widget_tweaks',
     'ckeditor',
+    'blog.templatetags',
 ]
 
 CKEDITOR_CONFIGS = {

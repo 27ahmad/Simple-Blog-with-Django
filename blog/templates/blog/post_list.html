@@ -1,6 +1,7 @@
 {% extends 'base.html' %}
 {% block content %}
 {% load widget_tweaks %}
+{% load custom_filters %}  <!-- Load your custom filter -->
 
 <div class='container'>
     <h1>All Posts</h1>
@@ -10,12 +11,14 @@
             <div class='card mb-4'>
                 <div class='card-body'>
                     <h5 class='card-title'>{{ post.title }}</h5>
-                    <p class='card-text'>{{ post.content|slice:":100" }}...</p>
+                    <p class='card-text'>{{ post.content|strip_tags|slice:":100" }}...</p>  <!-- Strip HTML tags and limit to 100 characters -->
                     <a href="{% url 'post_detail' post.pk %}" class='btn btn-primary'>Read more</a>
                 </div>
             </div>
         </div>
         {% endfor %}
+    </div>
+</div>
 {% endblock %}
 
 

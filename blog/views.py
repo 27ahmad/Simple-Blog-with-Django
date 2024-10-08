@@ -93,6 +93,24 @@ def delete_post(request, post_id):
         return redirect('author_posts')
     return render(request, 'blog/post_confirm_delete.html', {'post': post})
 
+@login_required
+def post_edit(request, pk):
+    post = get_object_or_404(Post, pk=pk)
+    
+    # Ensure that the logged-in user is the author of the post
+    if post.author != request.user:
+        return redirect('post_detail', pk=post.pk)  # Or send them to an error page
+
+    if request.method == 'POST':
+        form = PostForm(request.POST, instance=post)
+        if form.is_valid():
+            form.save()
+            return redirect('post_detail', pk=post.pk)
+    else:
+        form = PostForm(instance=post)
+
+    return render(request, 'blog/post_edit.html', {'form': form, 'post': post})
+
 def category_list(request):
     categories = Category.objects.all()
     return render(request, 'blog/category_list.html', {'categories': categories})
